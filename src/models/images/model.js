@@ -1,5 +1,5 @@
-const { users } = require("../../auth/models");
-("use strict");
+"use strict";
+// const { users } = require("../../auth/models");
 
 const imageModel = (sequelize, DataTypes) =>
   sequelize.define("Image", {
@@ -9,15 +9,5 @@ const imageModel = (sequelize, DataTypes) =>
     imgUrl: { type: DataTypes.STRING, required: true },
     ownerId: { type: DataTypes.INTEGER, required: true },
   });
-
-// imageModel.belongsTo(users);
-
-/*
-imageModel.beforeCreate(async (image) => {
-  console.log(image);
-  // TODO:
-  return Promise.resolve(image.imgUrl);
-});
-*/
 
 module.exports = imageModel;

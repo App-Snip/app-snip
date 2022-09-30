@@ -7,9 +7,16 @@ const can = require("../auth/middleware/acl");
 
 const router = express.Router();
 
+const { uploadToCloudinaryMiddleware } = require("../lib/upload");
+
+const multer = require("multer");
+// const storage = multer.memoryStorage();
+// const uploadMiddleware = multer({ storage: storage });
+const TEMP_UPLOAD_DIR = process.env.TEMP_UPLOAD_DIR;
+const uploadMiddleware = multer({ dest: TEMP_UPLOAD_DIR });
+
 router.param("model", (req, res, next) => {
   const modelName = req.params.model;
-  console.log("modelName", modelName);
   if (dataModules[modelName]) {
     req.model = dataModules[modelName];
     next();
@@ -30,7 +37,13 @@ router.get(
   handleGetStudentImages
 );
 // router.get("/:model/:id", can("read_own"), handleGetOne);
-router.post("/:model", can("create_own"), handleCreate);
+router.post(
+  "/:model",
+  can("create_own"),
+  uploadMiddleware.single("screenshot_img"),
+  uploadToCloudinaryMiddleware,
+  handleCreate
+);
 //router.put("/:model/:id", can("edit"), handleUpdate);
 //router.delete("/:model/:id", can("delete"), handleDelete);
 
@@ -47,6 +60,9 @@ async function handleGetOne(req, res) {
 
 async function handleCreate(req, res) {
   let obj = req.body;
+  if (req.uploadedImg) {
+    obj.imgUrl = req.uploadedImg.imgUrl;
+  }
   let newRecord = await req.model.create(obj);
   res.status(201).json(newRecord);
 }
@@ -61,7 +77,6 @@ async function handleUpdate(req, res) {
 async function handleDelete(req, res) {
   let id = req.params.id;
   let deletedRecord = await req.model.delete(id);
-  console.log(deletedRecord);
   res.status(200).json(deletedRecord);
 }
 
