@@ -10,10 +10,13 @@ const router = express.Router();
 const { uploadToCloudinaryMiddleware } = require("../lib/upload");
 
 const multer = require("multer");
-// const storage = multer.memoryStorage();
-// const uploadMiddleware = multer({ storage: storage });
-const TEMP_UPLOAD_DIR = process.env.TEMP_UPLOAD_DIR;
-const uploadMiddleware = multer({ dest: TEMP_UPLOAD_DIR });
+
+// Use memory for img storage...
+const storage = multer.memoryStorage();
+const uploadMiddleware = multer({ storage: storage });
+// Use tmp dir for img storage...
+//const TEMP_UPLOAD_DIR = process.env.TEMP_UPLOAD_DIR;
+//const uploadMiddleware = multer({ dest: TEMP_UPLOAD_DIR });
 
 router.param("model", (req, res, next) => {
   const modelName = req.params.model;
