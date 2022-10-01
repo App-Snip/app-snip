@@ -66,6 +66,7 @@ async function handleCreate(req, res) {
   if (req.uploadedImg) {
     obj.imgUrl = req.uploadedImg.imgUrl;
   }
+  obj.creatorId = req.user.id;
   let newRecord = await req.model.create(obj);
   res.status(201).json(newRecord);
 }
