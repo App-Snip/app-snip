@@ -15,7 +15,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "app-snip-cli": "github:App-Snip/app-snip-cli",
     "base-64": "^1.0.0",
     "bcrypt": "^5.0.1",
     "cloudinary": "^1.32.0",
@@ -30,6 +29,7 @@
     "sqlite3": "^5.1.1"
   },
   "devDependencies": {
+    "app-snip-cli": "github:App-Snip/app-snip-cli",
     "@types/jest": "^29.0.3",
     "jest": "^29.1.1",
     "prettier": "^2.7.1",
