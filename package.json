@@ -9,11 +9,13 @@
     "db:create": "sequelize db:create",
     "watch": "nodemon index.js",
     "test-watch": "jest --watchAll",
-    "test": "jest"
+    "test": "jest",
+    "connect-dev": "app-snip-cli upload -s http://localhost:3000 -d ./test-data"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "app-snip-cli": "github:App-Snip/app-snip-cli",
     "base-64": "^1.0.0",
     "bcrypt": "^5.0.1",
     "cloudinary": "^1.32.0",
